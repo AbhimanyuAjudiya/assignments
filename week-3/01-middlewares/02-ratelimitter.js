@@ -11,6 +11,22 @@ const app = express();
 // You have been given a numberOfRequestsForUser object to start off with which
 // clears every one second
 
+function moreThenFiveRequest(req, res, next) {
+  const userId = req.headers['user-id'];
+  if (numberOfRequestsForUser[userId] > 5) {
+    res.status(404).send('Not Found');
+    return;
+  }
+  if (numberOfRequestsForUser[userId] == undefined) {
+    numberOfRequestsForUser[userId] = 1;
+  } else {
+    numberOfRequestsForUser[userId]++;
+  }
+  next();
+}
+
+app.use(moreThenFiveRequest);
+
 let numberOfRequestsForUser = {};
 setInterval(() => {
     numberOfRequestsForUser = {};
@@ -23,5 +39,5 @@ app.get('/user', function(req, res) {
 app.post('/user', function(req, res) {
   res.status(200).json({ msg: 'created dummy user' });
 });
-
+app.listen("3000")
 module.exports = app;
