@@ -7,12 +7,10 @@ interface User {
 
 type UserProp = Pick<User, | 'name' | 'age'>;
 
-type UserPropOptional = Partial<UserProp>;
+type UserPropOptional = Partial<UserProp >;
 
 const dispUser = (user: UserProp) => {
     console.log(`Name ${user.name} age ${user.age}`);
 }
-
-
 
 dispUser({name : 'abhimanyu' , age : 20})
